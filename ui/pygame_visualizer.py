@@ -59,9 +59,20 @@ class PygameVisualizer:
         "reward_neg": (245, 130, 130),
     }
 
-    def __init__(self, env, cell_size=80, panel_height=140):
+    # Auto-scaling keeps large grids inside a reasonable window:
+    # cell_size = min(MAX_CELL_SIZE, MAX_BOARD_PIXELS // max(rows, cols)).
+    MAX_CELL_SIZE = 80
+    MAX_BOARD_PIXELS = 720
+
+    def __init__(self, env, cell_size=None, panel_height=140):
         pygame.init()
         pygame.font.init()
+
+        if cell_size is None:
+            cell_size = min(
+                self.MAX_CELL_SIZE,
+                self.MAX_BOARD_PIXELS // max(env.rows, env.cols),
+            )
 
         self.env = env
         self.cell_size = cell_size
@@ -373,6 +384,14 @@ class PygameVisualizer:
 
         pygame.display.flip()
         self.clock.tick(30)
+
+    def get_frame(self):
+        """Return the current screen as an (H, W, 3) uint8 array,
+        e.g. for assembling GIF recordings."""
+        import numpy as np
+
+        frame = pygame.surfarray.array3d(self.screen)
+        return np.transpose(frame, (1, 0, 2))
 
     def wait(self, milliseconds):
         pygame.time.delay(milliseconds)

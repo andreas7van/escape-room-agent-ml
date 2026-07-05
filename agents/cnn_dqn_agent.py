@@ -24,17 +24,21 @@ class CNNDuelingNetwork(nn.Module):
     def __init__(self, action_space_size, num_channels=NUM_CHANNELS, obs_size=OBS_SIZE):
         super(CNNDuelingNetwork, self).__init__()
 
+        # Two convolutions at full grid resolution, then a 2x2 max-pool
+        # before the last one: this keeps per-cell detail where it matters
+        # while making CPU training ~4x faster than a full-resolution stack.
         self.features = nn.Sequential(
             nn.Conv2d(num_channels, 32, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.Conv2d(32, 64, kernel_size=3, padding=1),
             nn.ReLU(),
+            nn.MaxPool2d(2),
             nn.Conv2d(64, 64, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.Flatten(),
         )
 
-        feature_size = 64 * obs_size * obs_size
+        feature_size = 64 * (obs_size // 2) * (obs_size // 2)
 
         self.value_stream = nn.Sequential(
             nn.Linear(feature_size, 256),
@@ -158,9 +162,17 @@ class CNNDQNAgent:
         self.loss_function = nn.SmoothL1Loss()
         self.replay_buffer = ObservationReplayBuffer(max_size=replay_buffer_size)
 
+    # When exploring, favour movement (actions 0-3) over interactions
+    # (PICK_KEY / SOLVE_PUZZLE / OPEN_DOOR): uniform sampling wastes almost
+    # half the exploratory steps on interactions that only make sense on
+    # specific cells.
+    MOVEMENT_EXPLORATION_BIAS = 0.75
+
     def choose_action(self, observation, training=True):
         if training and random.random() < self.epsilon:
-            return random.randint(0, self.action_space_size - 1)
+            if random.random() < self.MOVEMENT_EXPLORATION_BIAS:
+                return random.randint(0, 3)
+            return random.randint(4, self.action_space_size - 1)
 
         observation_tensor = torch.tensor(
             observation,
