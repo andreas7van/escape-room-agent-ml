@@ -49,6 +49,7 @@ class EscapeRoomEnv:
         level_paths=None,
         random_level=False,
         include_level_in_state=False,
+        level_data=None,
     ):
         self.max_steps = max_steps
 
@@ -69,8 +70,11 @@ class EscapeRoomEnv:
         self.current_level_index = 0
         self.level_name = ""
 
-        self.load_level(self.level_paths[0])
-        self.validate_map()
+        if level_data is not None:
+            self.set_level_data(level_data)
+        else:
+            self.load_level(self.level_paths[0])
+            self.validate_map()
         self.reset()
 
     def load_level(self, level_path):
@@ -81,6 +85,16 @@ class EscapeRoomEnv:
             level_data = json.load(file)
 
         self.current_level_path = level_path
+        self._apply_level_data(level_data)
+
+    def set_level_data(self, level_data):
+        """Load a level from an in-memory dict (same schema as the JSON files)
+        and validate it. Used by the procedural level generator."""
+        self.current_level_path = None
+        self._apply_level_data(level_data)
+        self.validate_map()
+
+    def _apply_level_data(self, level_data):
         self.current_level_index = int(level_data.get("level_id", 0))
         self.level_name = level_data.get("level_name", f"Level {self.current_level_index}")
 
