@@ -1,0 +1,45 @@
+{
+  "level_id": 2,
+  "level_name": "Advanced Puzzle Room",
+  "rows": 6,
+  "cols": 6,
+  "start_position": [0, 0],
+  "key_position": [2, 1],
+  "door_position": [5, 4],
+  "exit_position": [5, 5],
+  "walls": [
+    [0, 2],
+    [1, 2],
+    [2, 0],
+    [2, 4],
+    [3, 3],
+    [4, 1],
+    [5, 0]
+  ],
+  "puzzles": [
+    {
+      "id": "math_puzzle",
+      "symbol": "M",
+      "question": "What is 9 - 4?",
+      "answer": "5",
+      "reward": 20,
+      "position": [3, 0]
+    },
+    {
+      "id": "logic_puzzle",
+      "symbol": "L",
+      "question": "What gets wetter as it dries?",
+      "answer": "towel",
+      "reward": 25,
+      "position": [0, 4]
+    },
+    {
+      "id": "pattern_puzzle",
+      "symbol": "P",
+      "question": "Complete the sequence: 3, 6, 12, 24, ?",
+      "answer": "48",
+      "reward": 30,
+      "position": [4, 4]
+    }
+  ]
+}

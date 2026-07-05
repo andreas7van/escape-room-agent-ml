@@ -1,0 +1,35 @@
+[
+  {
+    "id": "math_puzzle",
+    "symbol": "M",
+    "question": "What is 3 + 4?",
+    "answer": "7",
+    "reward": 20,
+    "position": [
+      2,
+      1
+    ]
+  },
+  {
+    "id": "logic_puzzle",
+    "symbol": "L",
+    "question": "I speak without a mouth and hear without ears. What am I?",
+    "answer": "echo",
+    "reward": 25,
+    "position": [
+      1,
+      3
+    ]
+  },
+  {
+    "id": "pattern_puzzle",
+    "symbol": "P",
+    "question": "Complete the sequence: 2, 4, 8, 16, ?",
+    "answer": "32",
+    "reward": 30,
+    "position": [
+      4,
+      2
+    ]
+  }
+]

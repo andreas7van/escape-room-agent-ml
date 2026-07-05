@@ -1,0 +1,45 @@
+{
+  "level_id": 1,
+  "level_name": "Alternative Maze Room",
+  "rows": 6,
+  "cols": 6,
+  "start_position": [0, 0],
+  "key_position": [1, 2],
+  "door_position": [5, 4],
+  "exit_position": [5, 5],
+  "walls": [
+    [0, 3],
+    [1, 0],
+    [1, 4],
+    [2, 2],
+    [3, 2],
+    [4, 4],
+    [5, 0]
+  ],
+  "puzzles": [
+    {
+      "id": "math_puzzle",
+      "symbol": "M",
+      "question": "What is 5 + 6?",
+      "answer": "11",
+      "reward": 20,
+      "position": [3, 0]
+    },
+    {
+      "id": "logic_puzzle",
+      "symbol": "L",
+      "question": "What has keys but cannot open locks?",
+      "answer": "piano",
+      "reward": 25,
+      "position": [2, 4]
+    },
+    {
+      "id": "pattern_puzzle",
+      "symbol": "P",
+      "question": "Complete the sequence: 1, 3, 5, 7, ?",
+      "answer": "9",
+      "reward": 30,
+      "position": [4, 3]
+    }
+  ]
+}

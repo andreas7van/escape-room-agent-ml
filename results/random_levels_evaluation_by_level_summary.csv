@@ -1,0 +1,7 @@
+agent,level_id,level_name,success_rate,avg_reward,avg_steps,avg_solved_puzzles
+DQN,0,Classic Escape Room,1.0,265.0,21.0,3.0
+DQN,1,Alternative Maze Room,1.0,261.0,25.0,3.0
+DQN,2,Advanced Puzzle Room,1.0,257.0,29.0,3.0
+Q-Learning,0,Classic Escape Room,1.0,265.0,21.0,3.0
+Q-Learning,1,Alternative Maze Room,1.0,261.0,25.0,3.0
+Q-Learning,2,Advanced Puzzle Room,1.0,218.0,27.0,3.0
