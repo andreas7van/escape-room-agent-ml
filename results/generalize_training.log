@@ -1,0 +1,81 @@
+Using device: cpu
+Resume requested but no checkpoint/state found; starting a fresh run.
+Episode 100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 28% | Door: 1% | Avg Reward: -319.36 | Avg Steps: 107.9 | Loss: 0.2261 | Epsilon: 0.819
+Episode 200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 40% | Door: 0% | Avg Reward: -261.55 | Avg Steps: 108.0 | Loss: 0.1717 | Epsilon: 0.670
+Episode 300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 70% | Door: 2% | Avg Reward: -232.88 | Avg Steps: 108.0 | Loss: 0.4649 | Epsilon: 0.548
+Episode 400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 77% | Door: 2% | Avg Reward: -199.14 | Avg Steps: 107.8 | Loss: 0.1987 | Epsilon: 0.449
+Episode 500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5 (new best, checkpoint saved)
+Episode 500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 77% | Door: 3% | Avg Reward: -182.69 | Avg Steps: 108.0 | Loss: 0.1649 | Epsilon: 0.368
+Episode 600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 77% | Door: 3% | Avg Reward: -157.80 | Avg Steps: 107.9 | Loss: 0.5243 | Epsilon: 0.301
+Episode 700/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 65% | Door: 1% | Avg Reward: -144.13 | Avg Steps: 108.0 | Loss: 0.3848 | Epsilon: 0.246
+Episode 800/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 90% | Door: 2% | Avg Reward: -122.56 | Avg Steps: 108.0 | Loss: 0.2306 | Epsilon: 0.202
+Episode 900/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 82% | Door: 3% | Avg Reward: -114.33 | Avg Steps: 107.7 | Loss: 0.1969 | Epsilon: 0.165
+Episode 1000: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 1000/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 82% | Door: 3% | Avg Reward: -105.14 | Avg Steps: 107.8 | Loss: 0.1638 | Epsilon: 0.135
+Episode 1100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 88% | Door: 2% | Avg Reward: -94.81 | Avg Steps: 107.1 | Loss: 0.1411 | Epsilon: 0.111
+Episode 1200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 89% | Door: 1% | Avg Reward: -97.96 | Avg Steps: 107.8 | Loss: 0.1280 | Epsilon: 0.091
+Episode 1300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 83% | Door: 2% | Avg Reward: -95.86 | Avg Steps: 107.9 | Loss: 0.1267 | Epsilon: 0.074
+Episode 1400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 87% | Door: 1% | Avg Reward: -100.47 | Avg Steps: 108.0 | Loss: 0.1060 | Epsilon: 0.061
+Episode 1500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 1500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 2.00% | Key: 91% | Door: 4% | Avg Reward: -87.04 | Avg Steps: 107.7 | Loss: 0.1029 | Epsilon: 0.050
+Episode 1600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 4.00% | Key: 93% | Door: 8% | Avg Reward: -84.53 | Avg Steps: 106.9 | Loss: 0.1193 | Epsilon: 0.050
+Episode 1700/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 7.00% | Key: 84% | Door: 19% | Avg Reward: -133.76 | Avg Steps: 105.4 | Loss: 0.3324 | Epsilon: 0.050
+Episode 1800/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 4.00% | Key: 73% | Door: 13% | Avg Reward: -130.60 | Avg Steps: 105.5 | Loss: 0.7487 | Epsilon: 0.050
+Episode 1900/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 2.00% | Key: 59% | Door: 4% | Avg Reward: -176.24 | Avg Steps: 107.4 | Loss: 0.8780 | Epsilon: 0.050
+Episode 2000: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 2000/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 4.00% | Key: 70% | Door: 7% | Avg Reward: -163.51 | Avg Steps: 105.7 | Loss: 0.8940 | Epsilon: 0.050
+Episode 2100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 64% | Door: 6% | Avg Reward: -180.99 | Avg Steps: 107.9 | Loss: 0.8729 | Epsilon: 0.050
+Episode 2200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 3.00% | Key: 49% | Door: 5% | Avg Reward: -170.14 | Avg Steps: 107.5 | Loss: 0.8437 | Epsilon: 0.050
+Episode 2300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 38% | Door: 4% | Avg Reward: -172.17 | Avg Steps: 107.9 | Loss: 0.7408 | Epsilon: 0.050
+Episode 2400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 38% | Door: 3% | Avg Reward: -170.94 | Avg Steps: 108.0 | Loss: 0.6678 | Epsilon: 0.050
+Episode 2500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 2500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 3.00% | Key: 44% | Door: 6% | Avg Reward: -160.95 | Avg Steps: 107.6 | Loss: 0.6449 | Epsilon: 0.050
+Episode 2600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 7.00% | Key: 45% | Door: 8% | Avg Reward: -161.07 | Avg Steps: 107.0 | Loss: 0.7053 | Epsilon: 0.050
+Episode 2700/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 40% | Door: 3% | Avg Reward: -177.93 | Avg Steps: 107.7 | Loss: 0.7256 | Epsilon: 0.050
+Episode 2800/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 2.00% | Key: 40% | Door: 3% | Avg Reward: -179.71 | Avg Steps: 107.8 | Loss: 0.7242 | Epsilon: 0.050
+Episode 2900/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 1.00% | Key: 41% | Door: 2% | Avg Reward: -165.09 | Avg Steps: 107.5 | Loss: 0.7508 | Epsilon: 0.050
+Episode 3000: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 3000/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 40% | Door: 1% | Avg Reward: -206.24 | Avg Steps: 108.0 | Loss: 0.7315 | Epsilon: 0.050
+Episode 3100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 2.00% | Key: 24% | Door: 2% | Avg Reward: -191.90 | Avg Steps: 107.7 | Loss: 0.6509 | Epsilon: 0.050
+Episode 3200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 28% | Door: 1% | Avg Reward: -153.08 | Avg Steps: 108.0 | Loss: 0.6176 | Epsilon: 0.050
+Episode 3300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 28% | Door: 0% | Avg Reward: -196.36 | Avg Steps: 108.0 | Loss: 0.6107 | Epsilon: 0.050
+Episode 3400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 26% | Door: 2% | Avg Reward: -193.35 | Avg Steps: 108.0 | Loss: 0.6031 | Epsilon: 0.050
+Episode 3500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 3500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 20% | Door: 0% | Avg Reward: -172.12 | Avg Steps: 108.0 | Loss: 0.5702 | Epsilon: 0.050
+Episode 3600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 14% | Door: 0% | Avg Reward: -190.58 | Avg Steps: 108.0 | Loss: 0.5454 | Epsilon: 0.050
+Episode 3700/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 19% | Door: 0% | Avg Reward: -182.74 | Avg Steps: 108.0 | Loss: 0.5228 | Epsilon: 0.050
+Episode 3800/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 18% | Door: 0% | Avg Reward: -150.59 | Avg Steps: 108.0 | Loss: 0.4820 | Epsilon: 0.050
+Episode 3900/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 9% | Door: 0% | Avg Reward: -172.56 | Avg Steps: 108.0 | Loss: 0.4325 | Epsilon: 0.050
+Episode 4000: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 4000/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 10% | Door: 0% | Avg Reward: -177.90 | Avg Steps: 108.0 | Loss: 0.3864 | Epsilon: 0.050
+Episode 4100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 7% | Door: 0% | Avg Reward: -165.58 | Avg Steps: 108.0 | Loss: 0.3698 | Epsilon: 0.050
+Episode 4200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 3% | Door: 0% | Avg Reward: -175.43 | Avg Steps: 108.0 | Loss: 0.3357 | Epsilon: 0.050
+Episode 4300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 4% | Door: 0% | Avg Reward: -169.10 | Avg Steps: 108.0 | Loss: 0.3145 | Epsilon: 0.050
+Episode 4400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 3% | Door: 0% | Avg Reward: -148.73 | Avg Steps: 108.0 | Loss: 0.2810 | Epsilon: 0.050
+Episode 4500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 4500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 5% | Door: 0% | Avg Reward: -153.65 | Avg Steps: 108.0 | Loss: 0.2414 | Epsilon: 0.050
+Episode 4600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 8% | Door: 0% | Avg Reward: -149.61 | Avg Steps: 108.0 | Loss: 0.1882 | Epsilon: 0.050
+Episode 4700/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 5% | Door: 0% | Avg Reward: -141.46 | Avg Steps: 108.0 | Loss: 0.1506 | Epsilon: 0.050
+Episode 4800/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 2% | Door: 0% | Avg Reward: -141.56 | Avg Steps: 108.0 | Loss: 0.1205 | Epsilon: 0.050
+Episode 4900/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 5% | Door: 0% | Avg Reward: -126.04 | Avg Steps: 108.0 | Loss: 0.0897 | Epsilon: 0.050
+Episode 5000: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 5000/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 4% | Door: 0% | Avg Reward: -126.50 | Avg Steps: 108.0 | Loss: 0.0712 | Epsilon: 0.050
+Episode 5100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 2% | Door: 0% | Avg Reward: -126.34 | Avg Steps: 108.0 | Loss: 0.0527 | Epsilon: 0.050
+Episode 5200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 2% | Door: 0% | Avg Reward: -123.25 | Avg Steps: 108.0 | Loss: 0.0380 | Epsilon: 0.050
+Episode 5300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 1% | Door: 0% | Avg Reward: -122.31 | Avg Steps: 108.0 | Loss: 0.0318 | Epsilon: 0.050
+Episode 5400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 1% | Door: 0% | Avg Reward: -123.17 | Avg Steps: 108.0 | Loss: 0.0242 | Epsilon: 0.050
+Episode 5500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 5500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 1% | Door: 0% | Avg Reward: -122.57 | Avg Steps: 108.0 | Loss: 0.0219 | Epsilon: 0.050
+Episode 5600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 1% | Door: 0% | Avg Reward: -119.32 | Avg Steps: 108.0 | Loss: 0.0183 | Epsilon: 0.050
+Episode 5700/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 5% | Door: 0% | Avg Reward: -120.27 | Avg Steps: 108.0 | Loss: 0.0179 | Epsilon: 0.050
+Episode 5800/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 1% | Door: 0% | Avg Reward: -122.63 | Avg Steps: 108.0 | Loss: 0.0178 | Epsilon: 0.050
+Episode 5900/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 2% | Door: 0% | Avg Reward: -121.63 | Avg Steps: 108.0 | Loss: 0.0199 | Epsilon: 0.050
+Episode 6000: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 6000/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 4% | Door: 0% | Avg Reward: -123.87 | Avg Steps: 108.0 | Loss: 0.0261 | Epsilon: 0.050
+Episode 6100/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 4% | Door: 0% | Avg Reward: -121.59 | Avg Steps: 108.0 | Loss: 0.0308 | Epsilon: 0.050
+Episode 6200/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 2% | Door: 0% | Avg Reward: -119.96 | Avg Steps: 108.0 | Loss: 0.0292 | Epsilon: 0.050
+Episode 6300/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 5% | Door: 0% | Avg Reward: -122.15 | Avg Steps: 108.0 | Loss: 0.0306 | Epsilon: 0.050
+Episode 6400/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 8% | Door: 0% | Avg Reward: -121.86 | Avg Steps: 108.0 | Loss: 0.0271 | Epsilon: 0.050
+Episode 6500: validation on 50 held-out levels -> success 0.00%, avg steps 237.5
+Episode 6500/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 3% | Door: 0% | Avg Reward: -125.54 | Avg Steps: 108.0 | Loss: 0.0272 | Epsilon: 0.050
+Episode 6600/30000 | Stage 1/5 (stage_1_small_easy) | Rolling Success: 0.00% | Key: 5% | Door: 0% | Avg Reward: -120.94 | Avg Steps: 108.0 | Loss: 0.0258 | Epsilon: 0.050

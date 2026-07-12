@@ -3,9 +3,12 @@ import random
 from environment.escape_room_env import EscapeRoomEnv
 
 # Seed split: evaluation must always run on levels the agent has NEVER seen
-# during training, so training and testing draw from disjoint seed ranges.
+# during training, so training, validation and testing draw from disjoint
+# seed ranges. Validation levels are used during training for model
+# selection; the test range is reserved for the final evaluation only.
 TRAIN_SEEDS = range(0, 1000)
 TEST_SEEDS = range(1000, 1100)
+VAL_SEEDS = range(1100, 1150)
 
 MIN_SIZE = 6
 MAX_SIZE = 12

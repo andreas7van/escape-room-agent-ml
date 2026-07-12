@@ -1,14 +1,22 @@
 import argparse
+import json
 import os
 import random
 from collections import deque
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
+import torch
 
 from agents.cnn_dqn_agent import CNNDQNAgent
 from environment.escape_room_env import EscapeRoomEnv
-from environment.level_generator import TRAIN_SEEDS, LevelGenerator
+from environment.level_generator import (
+    TRAIN_SEEDS,
+    VAL_SEEDS,
+    LevelGenerator,
+    generate_from_seed,
+)
 from environment.observation import build_observation
 
 # Curriculum: each stage samples levels from the given ranges. The agent
@@ -86,6 +94,36 @@ def max_steps_for(rows, cols):
     return 3 * rows * cols
 
 
+def run_validation(agent, validation_levels):
+    """Greedy (epsilon=0) evaluation on the fixed held-out validation levels.
+    Returns (success_rate, avg_steps). Used for model selection only; the
+    test seed range stays untouched until the final evaluation."""
+    successes = 0
+    total_steps = 0
+
+    for level_data in validation_levels:
+        env = EscapeRoomEnv(
+            level_data=level_data,
+            max_steps=max_steps_for(level_data["rows"], level_data["cols"]),
+        )
+        env.reset()
+        observation = build_observation(env)
+
+        for _ in range(env.max_steps):
+            action = agent.choose_action(observation, training=False)
+            _, _, done, _ = env.step(action)
+            observation = build_observation(env)
+            if done:
+                break
+
+        if env.agent_position == env.exit_position and env.door_open:
+            successes += 1
+        total_steps += env.steps
+
+    count = len(validation_levels)
+    return successes / count, total_steps / count
+
+
 def run_episode(env, agent, train_every=1):
     """Run one training episode; returns (total_reward, success, losses)."""
     env.reset()
@@ -128,12 +166,44 @@ def train_generalize_agent(
     rng_seed=0,
     learning_rate=0.0005,
     epsilon_decay=0.998,
+    validate_every=500,
+    validation_stats_path="results/generalize_validation_stats.csv",
+    resume=False,
 ):
     os.makedirs("models", exist_ok=True)
     os.makedirs("results", exist_ok=True)
 
-    rng = random.Random(rng_seed)
+    # Sidecar with the curriculum/run state that the agent checkpoint does
+    # not carry, so an interrupted run can be resumed with --resume.
+    run_state_path = model_path.replace(".pth", "_state.json")
+    resuming = (
+        resume and os.path.exists(model_path) and os.path.exists(run_state_path)
+    )
+
+    # Reproducibility: seed every RNG the run touches (level sampling uses
+    # its own dedicated stream below; exploration uses the global `random`;
+    # replay sampling uses `random`; network init uses torch). A resumed run
+    # cannot replay the original streams mid-way, so it reseeds
+    # deterministically off the resume point instead.
+    if resuming:
+        with open(run_state_path, "r", encoding="utf-8") as file:
+            run_state = json.load(file)
+        seed_base = rng_seed + run_state["episode"]
+    else:
+        run_state = None
+        seed_base = rng_seed
+
+    random.seed(seed_base)
+    np.random.seed(seed_base)
+    torch.manual_seed(seed_base)
+
+    rng = random.Random(seed_base)
     generator = LevelGenerator()
+
+    # Fixed held-out validation levels (disjoint seeds from both the training
+    # and the test ranges), generated once so every validation pass sees the
+    # exact same levels.
+    validation_levels = [generate_from_seed(seed) for seed in VAL_SEEDS]
 
     agent = CNNDQNAgent(
         action_space_size=len(EscapeRoomEnv.ACTIONS),
@@ -150,11 +220,68 @@ def train_generalize_agent(
     stage_index = 0
     stage_episode_count = 0
     stage_successes = deque(maxlen=ROLLING_WINDOW)
+    start_episode = 1
 
     training_data = []
-    best_final_stage_success = 0.0
+    validation_data = []
+    best_validation_success = -1.0
+    best_validation_steps = float("inf")
 
-    for episode in range(1, episodes + 1):
+    if resuming:
+        agent.load(model_path)
+        # load() puts the networks in eval mode for inference use; training
+        # continues, so restore train mode on the policy network.
+        agent.policy_network.train()
+
+        stage_index = run_state["stage_index"]
+        stage_episode_count = run_state["stage_episode_count"]
+        start_episode = run_state["episode"] + 1
+        best_validation_success = run_state["best_validation_success"]
+        best_validation_steps = run_state["best_validation_steps"]
+
+        if os.path.exists(stats_path):
+            training_data = pd.read_csv(stats_path).to_dict("records")
+        if os.path.exists(validation_stats_path):
+            validation_data = pd.read_csv(validation_stats_path).to_dict(
+                "records"
+            )
+
+        # rebuild the rolling success window from the saved episode stats
+        current_stage_rows = [
+            row
+            for row in training_data
+            if row["stage"] == stage_index + 1
+        ]
+        for row in current_stage_rows[-ROLLING_WINDOW:]:
+            stage_successes.append(int(row["success"]))
+
+        print(
+            f"Resuming from episode {run_state['episode']} "
+            f"(stage {stage_index + 1}/{len(CURRICULUM_STAGES)}, "
+            f"epsilon {agent.epsilon:.3f}, "
+            f"best validation {best_validation_success:.2%})"
+        )
+    elif resume:
+        print(
+            "Resume requested but no checkpoint/state found; "
+            "starting a fresh run."
+        )
+
+    def save_run_state(episode):
+        with open(run_state_path, "w", encoding="utf-8") as file:
+            json.dump(
+                {
+                    "episode": episode,
+                    "stage_index": stage_index,
+                    "stage_episode_count": stage_episode_count,
+                    "best_validation_success": best_validation_success,
+                    "best_validation_steps": best_validation_steps,
+                },
+                file,
+                indent=2,
+            )
+
+    for episode in range(start_episode, episodes + 1):
         stage = CURRICULUM_STAGES[stage_index]
 
         level_data, wall_density = sample_stage_level(stage, rng, generator)
@@ -216,18 +343,44 @@ def train_generalize_agent(
             agent.epsilon = max(agent.epsilon, EPSILON_BOOST_ON_ADVANCE)
             agent.save(model_path.replace(".pth", f"_stage{stage_index}.pth"))
 
-        # track the best rolling success on the final stage
-        if (
-            stage_index == len(CURRICULUM_STAGES) - 1
-            and len(stage_successes) == ROLLING_WINDOW
-            and rolling_success > best_final_stage_success
-        ):
-            best_final_stage_success = rolling_success
-            agent.save(model_path.replace(".pth", "_best.pth"))
+        # --- periodic held-out validation for model selection ---
+        if episode % validate_every == 0:
+            val_success, val_steps = run_validation(agent, validation_levels)
+            validation_data.append(
+                {
+                    "episode": episode,
+                    "stage": stage_index + 1,
+                    "stage_name": stage["name"],
+                    "val_success_rate": val_success,
+                    "val_avg_steps": val_steps,
+                    "epsilon": agent.epsilon,
+                }
+            )
+            pd.DataFrame(validation_data).to_csv(
+                validation_stats_path, index=False
+            )
+
+            is_best = val_success > best_validation_success or (
+                val_success == best_validation_success
+                and val_steps < best_validation_steps
+            )
+            if is_best:
+                best_validation_success = val_success
+                best_validation_steps = val_steps
+                agent.save(model_path.replace(".pth", "_best.pth"))
+
+            print(
+                f"Episode {episode}: validation on {len(validation_levels)} "
+                f"held-out levels -> success {val_success:.2%}, "
+                f"avg steps {val_steps:.1f}"
+                f"{' (new best, checkpoint saved)' if is_best else ''}",
+                flush=True,
+            )
 
         if episode % checkpoint_every == 0:
             agent.save(model_path)
             pd.DataFrame(training_data).to_csv(stats_path, index=False)
+            save_run_state(episode)
 
         if episode % 100 == 0:
             recent = training_data[-100:]
@@ -251,23 +404,34 @@ def train_generalize_agent(
             )
 
     agent.save(model_path)
+    save_run_state(episodes)
 
     df = pd.DataFrame(training_data)
     df.to_csv(stats_path, index=False)
 
-    plot_training_curves(df)
+    validation_df = pd.DataFrame(validation_data)
+    if not validation_df.empty:
+        validation_df.to_csv(validation_stats_path, index=False)
+
+    plot_training_curves(df, validation_df=validation_df)
 
     print()
     print("Generalization training completed.")
     print(f"Final stage reached: {stage_index + 1}/{len(CURRICULUM_STAGES)}")
+    print(
+        f"Best validation success: {best_validation_success:.2%} "
+        f"(checkpoint: {model_path.replace('.pth', '_best.pth')})"
+    )
     print(f"Model saved at: {model_path}")
     print(f"Stats saved at: {stats_path}")
+    print(f"Validation stats saved at: {validation_stats_path}")
 
     return df
 
 
 def plot_training_curves(
     df,
+    validation_df=None,
     reward_plot_path="results/generalize_rewards.png",
     success_plot_path="results/generalize_success_rate.png",
     loss_plot_path="results/generalize_loss.png",
@@ -302,6 +466,15 @@ def plot_training_curves(
         df["success"].rolling(window, min_periods=1).mean(),
         label=f"Success Rate ({window} ep window)",
     )
+    if validation_df is not None and not validation_df.empty:
+        plt.plot(
+            validation_df["episode"],
+            validation_df["val_success_rate"],
+            marker="o",
+            markersize=3,
+            color="darkorange",
+            label="Held-out validation success",
+        )
     add_stage_lines()
     plt.axhline(SUCCESS_THRESHOLD, color="green", linestyle=":", alpha=0.7,
                 label=f"Stage threshold ({SUCCESS_THRESHOLD:.0%})")
@@ -346,9 +519,21 @@ def main():
     )
     parser.add_argument("--train-every", type=int, default=1)
     parser.add_argument("--target-update", type=int, default=10)
+    parser.add_argument("--checkpoint-every", type=int, default=1000)
     parser.add_argument("--learning-rate", type=float, default=0.0005)
     parser.add_argument("--epsilon-decay", type=float, default=0.998)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--validate-every", type=int, default=500)
+    parser.add_argument(
+        "--validation-stats-path",
+        default="results/generalize_validation_stats.csv",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Continue from the checkpoint and run-state sidecar at "
+        "--model-path, if they exist.",
+    )
 
     args = parser.parse_args()
 
@@ -358,9 +543,13 @@ def main():
         stats_path=args.stats_path,
         train_every=args.train_every,
         target_update_frequency=args.target_update,
+        checkpoint_every=args.checkpoint_every,
         learning_rate=args.learning_rate,
         epsilon_decay=args.epsilon_decay,
         rng_seed=args.seed,
+        validate_every=args.validate_every,
+        validation_stats_path=args.validation_stats_path,
+        resume=args.resume,
     )
 
 

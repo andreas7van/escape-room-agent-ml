@@ -1,0 +1,14 @@
+episode,stage,stage_name,val_success_rate,val_avg_steps,epsilon
+500,1,stage_1_small_easy,0.0,237.54,0.36751125485715885
+1000,1,stage_1_small_easy,0.0,237.54,0.13506452244668335
+1500,1,stage_1_small_easy,0.0,237.54,0.05
+2000,1,stage_1_small_easy,0.0,237.54,0.05
+2500,1,stage_1_small_easy,0.0,237.54,0.05
+3000,1,stage_1_small_easy,0.0,237.54,0.05
+3500,1,stage_1_small_easy,0.0,237.54,0.05
+4000,1,stage_1_small_easy,0.0,237.54,0.05
+4500,1,stage_1_small_easy,0.0,237.54,0.05
+5000,1,stage_1_small_easy,0.0,237.54,0.05
+5500,1,stage_1_small_easy,0.0,237.54,0.05
+6000,1,stage_1_small_easy,0.0,237.54,0.05
+6500,1,stage_1_small_easy,0.0,237.54,0.05
